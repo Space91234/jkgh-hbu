@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Throw Calculator with Vertical Position</title>
+</head>
+<body>
+    <h2>Perfect Throw</h2>
+    <label for="vert_position">Vertical Position at t = 0.5597252803 (inches):</label>
+    <input type="number" id="vert_position" placeholder="e.g., 60.5">
+    <br><br>
+    <button onclick="calculate()">Calculate</button>
+
+    <h3>Results:</h3>
+    <p id="result"></p>
+
+    <script>
+        function calculateThrowSpeed(vert_position, time) {
+            const g = 386.09; // Gravitational acceleration in inches/s²
+            const angle = Math.PI / 4; // 45 degrees in radians
+
+            // Calculate required initial speed to reach the given vertical position at time t
+            let speed = (vert_position + 0.5 * g * time ** 2) / (Math.sin(angle) * time);
+
+            return speed.toFixed(2);
+        }
+
+        function calculate() {
+            let vert_position = parseFloat(document.getElementById('vert_position').value);
+            let time = 0.5597252803; // Given time in seconds
+
+            if (isNaN(vert_position) || vert_position <= 0) {
+                document.getElementById('result').innerText = "Please enter a valid vertical position.";
+                return;
+            }
+
+            let required_speed = calculateThrowSpeed(vert_position, time);
+
+            document.getElementById('result').innerText = `Required Initial Speed: ${required_speed} inches/second to reach ` +
+                `a vertical position of ${vert_position} inches at t = ${time} seconds.`;
+        }
+    </script>
+</body>
+</html>
